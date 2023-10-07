@@ -1,5 +1,6 @@
-require 'nokogiri'
-require 'net/http'
+require 'open-uri'
+require 'json'
+
 
 class GamesController < ApplicationController
   def new
@@ -39,9 +40,11 @@ class GamesController < ApplicationController
 
     if response.code == '200'
       data = JSON.parse(response.body)
-      return data['found']
-    else
-      return false
+      if data['found']
+        return true
+      else
+        return false
+      end
     end
   end
 end
